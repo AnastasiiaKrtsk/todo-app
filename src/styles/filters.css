@@ -33,3 +33,23 @@
     display: none;
   }
 }
+#sort-select {
+  padding: 10px 40px 10px 20px;
+
+  background-color: #0d081e;
+  border: 1px solid #1a0f40;
+  border-radius: 4px;
+  color: var(--text);
+
+  font-size: var(--text-sm);
+  outline: none;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: url('/assets/select-arrow.svg');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 10px;
+}

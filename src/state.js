@@ -4,6 +4,7 @@ export const state = {
   tasks: loadTasks(),
   currentFilter: 'all',
   page: 1,
+  sort: 'newest',
 };
 
 export const addTaskAction = (data) => {
@@ -23,7 +24,9 @@ export const setTaskActiveAction = (id) => {
 };
 
 export const setCurrentFilterAction = (filter) => {
-  console.log(filter);
-  console.log(state.tasks[0]);
   state.currentFilter = filter;
+};
+
+export const setSorting = (sorter) => {
+  state.sort = sorter;
 };

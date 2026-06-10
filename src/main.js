@@ -1,10 +1,11 @@
 //main.js
-import { render, renderTags, renderTasks } from './render';
+import { render, renderTags } from './render';
 import {
   addTaskAction,
   deleteTaskAction,
   setTaskActiveAction,
   setCurrentFilterAction,
+  setSorting,
 } from './state';
 import { form, list, tagSelect, filters } from './dom';
 
@@ -28,7 +29,7 @@ const formSubmitHandler = (e) => {
     title: taskTitle,
     tag: taskTag,
     completed: false,
-    createdAt: new Date(Date.now()).toLocaleDateString(),
+    createdAt: Date.now(),
   };
 
   console.log('add!', Date.now());
@@ -66,6 +67,17 @@ const filtersClickHandler = (e) => {
   setCurrentFilterAction(currentFilter);
   bootstrap();
 };
+
+const filtersChangeHandler = (e) => {
+  const sortSelect = e.target.closest('#sort-select');
+  if (!sortSelect) return;
+
+  setSorting(sortSelect.value);
+  bootstrap();
+};
+
+filters.addEventListener('change', filtersChangeHandler);
 filters.addEventListener('click', filtersClickHandler);
+
 form.addEventListener('submit', formSubmitHandler);
 list.addEventListener('click', listClickHandler);

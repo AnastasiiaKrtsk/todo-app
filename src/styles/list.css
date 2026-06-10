@@ -22,10 +22,16 @@
 
 .list li span.tag {
   border: 1px solid currentColor;
+  align-self: center;
+}
+.list li span.time {
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 .status {
-  width: 18px;
-  height: 18px;
+  width: 25px;
+  height: 25px;
   align-self: center;
   background: transparent;
   border: 2px solid currentColor;
