@@ -3,6 +3,7 @@ import { loadTasks, saveTasks } from './storage.js';
 export const state = {
   tasks: loadTasks(),
   currentFilter: 'all',
+  page: 1,
 };
 
 export const addTaskAction = (data) => {
@@ -19,4 +20,10 @@ export const setTaskActiveAction = (id) => {
   const task = state.tasks.find((task) => task.id === id);
   task.completed = !task.completed;
   saveTasks(state.tasks);
+};
+
+export const setCurrentFilterAction = (filter) => {
+  console.log(filter);
+  console.log(state.tasks[0]);
+  state.currentFilter = filter;
 };
