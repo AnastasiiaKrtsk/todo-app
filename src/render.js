@@ -1,24 +1,33 @@
 //render.js
 import { list, tagSelect, filters } from './dom';
 import { state } from './state';
-import { TAGS, FILTERS } from './constants';
+import { TAGS, FILTERS, SORTERS } from './constants';
 
 function getFilteredTasks() {
   const matchFilter = FILTERS[state.currentFilter];
   return state.tasks.filter((task) => matchFilter.fn(task));
 }
 
-export const render = () => {
-  list.innerHTML = '';
-  const filteredTasks = getFilteredTasks();
+function applySort(tasks) {
+  const sorted = [...tasks];
 
-  const tasks = renderTasks(filteredTasks);
-  list.innerHTML = tasks;
+  const sorter = SORTERS.find((s) => s.id === state.sort);
+  if (!sorter) return sorted;
+
+  return sorted.sort(sorter.fn);
+}
+
+export const render = () => {
+  const filteredTasks = getFilteredTasks();
+  const sorted = applySort(filteredTasks);
+
+  list.innerHTML = renderTasks(sorted);
 
   renderFilters();
+  renderSorters();
 };
 
-export const renderTasks = (tasks) => {
+const renderTasks = (tasks) => {
   return tasks
     .map((task) => {
       const statusClass = task.completed ? 'done' : 'active';
@@ -27,7 +36,7 @@ export const renderTasks = (tasks) => {
     <span class="status ${statusClass} ${task.tag}"></span>
     <span class="title ${statusClass} ${task.tag}">${task.title}</span>
     <span class="tag ${task.tag}">${task.tag.toUpperCase()}</span>
-    <span>${task.createdAt}</span>
+    <span class="time">${task.createdAt}</span>
     <button type="button" data-del>x</button>
     </li>
     `;
@@ -43,7 +52,7 @@ export const renderTags = () => {
   });
 };
 
-export const renderFilters = () => {
+const renderFilters = () => {
   const filtersHTML = Object.entries(FILTERS)
     .map(
       ([id, filter]) => `
@@ -56,11 +65,18 @@ export const renderFilters = () => {
     .join('');
 
   const sortHTML = `
-    <button class="sort-btn" data-sort>
-      <img src="./assets/select-arrow.svg" alt="" />
-      <span>Sort</span>
-    </button>
+    <select name="sort" id="sort-select"></select>
   `;
 
   filters.innerHTML = filtersHTML + sortHTML;
+};
+
+const renderSorters = () => {
+  const sorting = document.querySelector('#sort-select');
+  sorting.innerHTML = SORTERS.map((sorter) => {
+    return `
+    <option value="${sorter.id}">${sorter.label}</option>
+    `;
+  });
+  sorting.value = state.sort;
 };

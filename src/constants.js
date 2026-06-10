@@ -32,3 +32,26 @@ export const FILTERS = {
     svg: './assets/completed.svg',
   },
 };
+
+export const SORTERS = [
+  {
+    id: 'newest',
+    label: 'Newest first',
+    fn: (a, b) => b.createdAt - a.createdAt,
+  },
+  {
+    id: 'oldest',
+    label: 'Oldest first',
+    fn: (a, b) => a.createdAt - b.createdAt,
+  },
+  {
+    id: 'az',
+    label: 'A → Z',
+    fn: (a, b) => a.title.localeCompare(b.title),
+  },
+  {
+    id: 'za',
+    label: 'Z → A',
+    fn: (a, b) => b.title.localeCompare(a.title),
+  },
+];
