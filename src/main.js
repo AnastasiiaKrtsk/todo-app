@@ -1,7 +1,12 @@
 //main.js
 import { render, renderTags, renderTasks } from './render';
-import { addTaskAction, deleteTaskAction, setTaskActiveAction } from './state';
-import { form, list, tagSelect } from './dom';
+import {
+  addTaskAction,
+  deleteTaskAction,
+  setTaskActiveAction,
+  setCurrentFilterAction,
+} from './state';
+import { form, list, tagSelect, filters } from './dom';
 
 function bootstrap() {
   render();
@@ -53,5 +58,14 @@ const listClickHandler = (e) => {
   }
 };
 
+const filtersClickHandler = (e) => {
+  const filterBtn = e.target.closest('button');
+  if (!filterBtn) return;
+
+  const currentFilter = filterBtn.dataset.filter;
+  setCurrentFilterAction(currentFilter);
+  bootstrap();
+};
+filters.addEventListener('click', filtersClickHandler);
 form.addEventListener('submit', formSubmitHandler);
 list.addEventListener('click', listClickHandler);

@@ -3,21 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="./src/style.css" />
+    <link rel="stylesheet" href="./src/styles/main.css" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>todo-app</title>
   </head>
   <body>
     <div id="app">
-      <form action="" id="task-form">
-        <input type="text" name="title" placeholder="Enter task" required />
-        <select name="tag" id="tag-select"></select>
-        <button type="submit">+</button>
-      </form>
-      <div class="filters"></div>
-      <ul class="list"></ul>
+      <header>
+        <div id="header">
+          <div>
+            <h1>Today</h1>
+            <p>Focus on what metters</p>
+          </div>
+          <div>
+            <p>JUNE 3, 2026</p>
+            <h1>09:52</h1>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <form action="" id="task-form">
+          <input type="text" name="title" placeholder="Enter task" required />
+          <select name="tag" id="tag-select"></select>
+          <button type="submit">+</button>
+        </form>
+
+        <div class="filters"></div>
+        <ul class="list"></ul>
+      </main>
+
+      <footer>FOOTER</footer>
     </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

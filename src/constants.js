@@ -9,13 +9,26 @@ export const FILTERS = {
   all: {
     label: 'All',
     fn: () => true,
+    svg: './assets/all.svg',
   },
-  active: {
-    label: 'Active',
-    fn: (task) => !task.completed,
+  work: {
+    label: 'Work',
+    fn: (t) => t.tag === 'work',
+    svg: './assets/work.svg',
+  },
+  health: {
+    label: 'Health',
+    fn: (t) => t.tag === 'health',
+    svg: './assets/health.svg',
+  },
+  personal: {
+    label: 'Personal',
+    fn: (t) => t.tag === 'personal',
+    svg: './assets/personal.svg',
   },
   completed: {
     label: 'Completed',
-    fn: (task) => task.completed,
+    fn: (t) => t.completed,
+    svg: './assets/completed.svg',
   },
 };

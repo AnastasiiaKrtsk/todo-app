@@ -1,15 +1,25 @@
 //render.js
-import { list, tagSelect } from './dom';
+import { list, tagSelect, filters } from './dom';
 import { state } from './state';
-import { TAGS } from './constants';
+import { TAGS, FILTERS } from './constants';
+
+function getFilteredTasks() {
+  const matchFilter = FILTERS[state.currentFilter];
+  return state.tasks.filter((task) => matchFilter.fn(task));
+}
+
 export const render = () => {
   list.innerHTML = '';
-  const tasks = renderTasks();
+  const filteredTasks = getFilteredTasks();
+
+  const tasks = renderTasks(filteredTasks);
   list.innerHTML = tasks;
+
+  renderFilters();
 };
 
-export const renderTasks = () => {
-  return state.tasks
+export const renderTasks = (tasks) => {
+  return tasks
     .map((task) => {
       const statusClass = task.completed ? 'done' : 'active';
       return `
@@ -31,4 +41,26 @@ export const renderTags = () => {
     <option value="${tag.id}">${tag.label}</option>
     `;
   });
+};
+
+export const renderFilters = () => {
+  const filtersHTML = Object.entries(FILTERS)
+    .map(
+      ([id, filter]) => `
+      <button data-filter="${id}" class="filter-btn ${state.currentFilter === id ? 'active' : 'hidden'}">
+        <img src="${filter.svg}" alt="" />
+        <span>${filter.label}</span>
+      </button>
+    `,
+    )
+    .join('');
+
+  const sortHTML = `
+    <button class="sort-btn" data-sort>
+      <img src="./assets/select-arrow.svg" alt="" />
+      <span>Sort</span>
+    </button>
+  `;
+
+  filters.innerHTML = filtersHTML + sortHTML;
 };
