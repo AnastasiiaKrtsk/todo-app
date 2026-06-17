@@ -1,7 +1,8 @@
 //render.js
-import { list, tagSelect, filters } from './dom';
+import { list, tagSelect, filters, header } from './dom';
 import { state } from './state';
 import { TAGS, FILTERS, SORTERS } from './constants';
+import dayjs from 'dayjs';
 
 function getFilteredTasks() {
   const matchFilter = FILTERS[state.currentFilter];
@@ -80,3 +81,15 @@ const renderSorters = () => {
   });
   sorting.value = state.sort;
 };
+
+const renderHeader = () => {
+  const date = dayjs().format('MMMM D, YYYY');
+  const time = dayjs().format('HH:mm');
+
+  header.innerHTML = `
+    <p>${date}</p>
+    <h1>${time}</h1>
+   `;
+};
+renderHeader();
+setInterval(renderHeader, 1000);
